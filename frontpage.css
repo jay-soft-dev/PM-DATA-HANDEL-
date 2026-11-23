@@ -1,0 +1,66 @@
+/* Mould PM Matrix Sheet Styles */
+.excel-grid {
+    border-collapse: collapse;
+}
+
+.excel-grid,
+.excel-grid th,
+.excel-grid td {
+    border: 1px solid #3f4654;
+}
+
+/* Subtle depth shadow on sticky left columns during horizontal scroll */
+.excel-grid th.sticky,
+.excel-grid td.sticky {
+    box-shadow: 2px 0 6px -2px rgba(0, 0, 0, 0.55);
+}
+
+/* Custom dark scrollbar for large 70-tool x 30-day matrix */
+.pm-scroll-area::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+}
+
+.pm-scroll-area::-webkit-scrollbar-track {
+    background: #0d1017;
+}
+
+.pm-scroll-area::-webkit-scrollbar-thumb {
+    background: #2b3242;
+    border-radius: 6px;
+}
+
+.pm-scroll-area::-webkit-scrollbar-thumb:hover {
+    background: #424c63;
+}
+
+/* Active cell states for [P], [A], and [PIC] */
+.pm-cell-p-active {
+    background-color: rgba(251, 191, 36, 0.2);
+    color: #fcd34d;
+    font-weight: 700;
+}
+
+.pm-cell-a-active {
+    background-color: rgba(16, 185, 129, 0.2);
+    color: #6ee7b7;
+    font-weight: 700;
+}
+
+.pm-cell-pic-one {
+    background-color: rgba(6, 182, 212, 0.16);
+    color: #67e8f9;
+    font-weight: 700;
+}
+
+.pm-cell-pic-both {
+    background-color: rgba(14, 165, 233, 0.26);
+    color: #bae6fd;
+    font-weight: 700;
+}
+
+/* Toast transition helper */
+.pm-toast-visible {
+    transform: translateY(0);
+    opacity: 1;
+}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PM Photo Archive — ToolSync PM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ["Space Grotesk", "system-ui", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="frontpage.css" />
+    <link rel="stylesheet" href="pm-gallery.css" />
+</head>
+<body class="bg-[#0b0d11] text-stone-100 min-h-screen antialiased gallery-scroll">
+    <!-- Top Header -->
+    <header class="sticky top-0 z-30 border-b border-stone-800 bg-[#0b0d11]/95 backdrop-blur">
+        <div class="max-w-[1600px] mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <a
+                    href="frontpage.html"
+                    class="px-3 py-1.5 rounded-lg bg-[#181d28] hover:bg-stone-800 border border-stone-700 text-xs font-mono text-amber-300 font-bold"
+                >
+                    ← Back to PM Sheet
+                </a>
+                <div>
+                    <h1 class="text-sm sm:text-base font-bold uppercase tracking-wide text-sky-300">
+                        PM BEFORE &amp; AFTER PHOTO ARCHIVE
+                    </h1>
+                    <p class="text-[11px] font-mono text-stone-400">
+                        All uploaded PM photos in one place • Filter by Tool No, Date, or Stage
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2 text-xs font-mono">
+                <span id="total-pics-badge" class="px-2.5 py-1.5 rounded-lg bg-[#181d28] border border-stone-700 text-sky-300 font-bold">
+                    0 Photos
+                </span>
+                <input
+                    id="gallery-tool-search"
+                    type="text"
+                    placeholder="Search Tool No / Remark..."
+                    class="bg-[#181d28] border border-stone-700 rounded-lg px-2.5 py-1.5 text-white placeholder-stone-500"
+                />
+                <input
+                    id="gallery-date-filter"
+                    type="date"
+                    title="Filter by Date"
+                    class="bg-[#181d28] border border-stone-700 rounded-lg px-2.5 py-1.5 text-amber-300"
+                />
+                <select
+                    id="gallery-stage-filter"
+                    title="Filter by Stage"
+                    class="bg-[#181d28] border border-stone-700 rounded-lg px-2.5 py-1.5 text-emerald-300"
+                >
+                    <option value="ALL">All Stages</option>
+                    <option value="BEFORE">Before PM Only</option>
+                    <option value="AFTER">After PM Only</option>
+                </select>
+                <button
+                    id="reset-gallery-filters-btn"
+                    type="button"
+                    class="px-2.5 py-1.5 rounded-lg bg-[#181d28] hover:bg-stone-800 border border-stone-700 text-stone-300"
+                >
+                    Reset
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-[1600px] mx-auto px-4 py-5 space-y-5">
+        <!-- Summary Strip -->
+        <section class="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs">
+            <div class="rounded-xl bg-[#11151d] border border-stone-800 p-3.5 flex items-center justify-between">
+                <span class="text-stone-400">Records with Photos</span>
+                <span id="stat-records" class="text-base font-bold text-sky-300">0</span>
+            </div>
+            <div class="rounded-xl bg-[#11151d] border border-stone-800 p-3.5 flex items-center justify-between">
+                <span class="text-stone-400">Before PM Photos</span>
+                <span id="stat-before" class="text-base font-bold text-amber-300">0</span>
+            </div>
+            <div class="rounded-xl bg-[#11151d] border border-stone-800 p-3.5 flex items-center justify-between">
+                <span class="text-stone-400">After PM Photos</span>
+                <span id="stat-after" class="text-base font-bold text-emerald-300">0</span>
+            </div>
+        </section>
+
+        <!-- Photo Cards Grid -->
+        <section id="gallery-cards-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></section>
+    </main>
+
+    <!-- Fullscreen Preview Modal -->
+    <div id="gallery-lightbox" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 p-4">
+        <div class="max-w-4xl w-full rounded-2xl bg-[#11151d] border border-stone-700 p-4 space-y-3">
+            <div class="flex items-center justify-between gap-2 font-mono text-xs">
+                <span id="lightbox-caption" class="text-sky-300 font-bold">Photo Preview</span>
+                <div class="flex items-center gap-2">
+                    <a
+                        id="lightbox-download-link"
+                        download="pm-photo.jpg"
+                        class="px-3 py-1.5 rounded-lg bg-emerald-400 hover:bg-emerald-300 text-stone-950 font-bold"
+                    >
+                        Download
+                    </a>
+                    <button
+                        id="close-gallery-lightbox-btn"
+                        type="button"
+                        class="px-3 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-600"
+                    >
+                        Close [X]
+                    </button>
+                </div>
+            </div>
+            <img id="lightbox-image" alt="Full Photo" class="max-h-[78vh] mx-auto rounded-xl object-contain" />
+        </div>
+    </div>
+
+    <div id="toast" class="fixed bottom-5 right-5 z-50 translate-y-20 opacity-0 pointer-events-none transition-all duration-300 rounded-xl bg-stone-900 border border-amber-400/50 px-4 py-2.5 text-xs font-mono text-amber-200"></div>
+
+    <script src="pm-gallery.js"></script>
+</body>
+</html>
