@@ -14,6 +14,7 @@ A web-based Preventive Maintenance (PM) planning, tracking, and reporting applic
 - **Excel Export with Embedded Photos (`ExcelJS`):** Generates a formatted `.xlsx` workbook containing the **PM Plan Matrix** sheet and a **PM Photos** sheet with embedded Before/After images, remarks, and clickable cell hyperlinks.
 - **Local Persistence & JSON Backup/Restore:** Stores state in `localStorage` and supports full JSON backup export and restore for safe offline/local workflows.
 - **Prepared By / Approved By Sign-Off:** Monthly sign-off fields persisted per month.
+  
 
 ## Tech Stack
 
@@ -33,3 +34,4 @@ A web-based Preventive Maintenance (PM) planning, tracking, and reporting applic
 ├── pm-gallery.html     # PM photo gallery view
 ├── pm-gallery.js       # Gallery rendering and photo management logic
 └── pm-gallery.css      # Gallery styling
+
